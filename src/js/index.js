@@ -1,4 +1,6 @@
-import location from './store/location'
+import '../css/style.css';
+import './plugins/appPlugins.js';
+import location from './store/location';
 
 location.init()
 .then(res => {  
