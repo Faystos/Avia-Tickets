@@ -13,7 +13,8 @@ M.Autocomplete.init(autocomplete);
 
 // init datepicker
 M.Datepicker.init(datepicker, {
-  showClearBtn: true
+  showClearBtn: true,
+  format: 'yyyy-mm'
 });
 
 
