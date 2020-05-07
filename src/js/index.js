@@ -2,6 +2,7 @@ import '../css/style.css';
 import './plugins/appPlugins.js';
 import location from './store/location';
 import formUI from './views/form';
+import currencyUI from './views/currensy';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,12 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const origin = location.getCityCodeByKey(formUI.originValue),
           destination = location.getCityCodeByKey(formUI.destinationValue),
           depart_date = formUI.departValue,
-          return_date = formUI.returnValue;
+          return_date = formUI.returnValue,
+          currency = currencyUI.currencyValue;
     await location.fetchTickets({
       origin,
       destination,
       depart_date,
       return_date,
+      currency
     });
   }
 });
