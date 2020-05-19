@@ -34,12 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       destination,
       depart_date,
       return_date,
-      currency
+      currency     
     });
   }
 });
-// location.init()
-// .then(res => {  
-//  console.log(res); 
- 
-// });
