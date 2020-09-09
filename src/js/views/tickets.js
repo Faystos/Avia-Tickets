@@ -44,7 +44,7 @@ class TicketUI {
   static ticketTemp (ticket, currency) {
     return `
     <div class="col s12 m6">
-      <div class="card ticket-card">
+      <div class="card ticket-card" data-ticket-id="${ticket.id}">
 
         <div class="ticket-airline d-flex align-items-center">
           <img src="${ticket.airline_logo}" class="ticket-airline-img"/>
@@ -71,6 +71,9 @@ class TicketUI {
           <span class="ticket-transfers">Пересадок: ${ticket.transfers}</span>
           <span class="ticket-flight-number">Номер рейса: ${ticket.flight_number}</span>
         </div>
+        <a class="waves-effect waves-light btn-small green darken-1 add-favorite ml-auto">
+          Добавить в избранное
+        </a>
       </div>
     </div>
     `;

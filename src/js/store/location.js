@@ -5,7 +5,7 @@ class Location {
   constructor(api, helpers) {
     this.api = api;
     this.countries = null;
-    this.cities = null;
+    this.cities = null;    
     this.shortCitiesList = {};
     this.lastSearch = {};
     this.airlines = {};
@@ -43,6 +43,11 @@ class Location {
 
   getAirlineLogoByCode (code) {
     return this.airlines[code] ? this.airlines[code].logo : '';
+  }
+
+  getTicketById (id) {
+    const ticket = this.lastSearch.find(el => el.id === id);
+    return ticket;
   }
 
   createShortsCitiesList(cities) {
@@ -85,11 +90,11 @@ class Location {
   async fetchTickets(params) {
     const response = await this.api.prices(params);
     this.lastSearch = this.serializeTickets(response.data); 
-    console.log(this.lastSearch);      
+    // console.log(this.lastSearch);      
   }
 
   serializeTickets (tickets) {
-    return Object.values(tickets).map(ticket => {
+    return Object.values(tickets).map((ticket, i) => {
       return {
         ...ticket,
         origin_name: this.getCityNameByCode(ticket.origin),
@@ -98,6 +103,7 @@ class Location {
         airline_name: this.getAirlineNameByCode(ticket.airline),
         departure_at: this.formatDate(ticket.departure_at, 'dd MMM yyyy hh:mm'),
         return_at: this.formatDate(ticket.return_at, 'dd MMM yyyy hh:mm'),
+        id: i,
       }
     });
   }

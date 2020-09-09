@@ -4,12 +4,15 @@ import location from './store/location';
 import formUI from './views/form';
 import currencyUI from './views/currensy';
 import ticketsUI from './views/tickets';
+import { favorite } from './store/favorite';
+import { favoritesUI } from './views/favorites';
 
 
 document.addEventListener('DOMContentLoaded', () => {
   initApp();
 
   const form = formUI.form;
+  const ticketsContainer = ticketsUI.container;
 
   // События
   form.addEventListener('submit', evt => {
@@ -17,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     onSubmitForm();
   });
 
+  ticketsContainer.addEventListener('click', onFavoriteTicket);
 
   // стартовые функции
   async function initApp() {
@@ -37,7 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
       return_date,
       currency     
     });
-    ticketsUI.renderTickets(location.lastSearch);
+    ticketsUI.renderTickets(location.lastSearch);           
+  }
+
+  function onFavoriteTicket (evt) {
+    if(!evt.target.classList.contains('add-favorite')) return;
+
+    const dataTicketId = evt.target.closest("[data-ticket-id]");
+    const ticketId = Number(dataTicketId.dataset.ticketId);
+    const ticket = location.getTicketById(ticketId);
+    favorite.addFavorite(ticket);
+    favoritesUI.renderFavorites(favorite.arrFavorite);    
   }
 });
-
