@@ -29,7 +29,7 @@ class Location {
   }
 
   getCityCodeByKey(key) {
-    const city = Object.values(this.cities).find(item => item.full_name === key);
+    const city = Object.values(this.cities).find(item => item.full_name === key);    
     return city.code;
   }
 
@@ -68,14 +68,14 @@ class Location {
     return cities.reduce((acc, city) => {      
       const country_name = this.countries[city.country_code].name;
       city.name = city.name || city.name_translations.en; 
-      const full_name = `${city.name}, ${country_name}`;
+      const full_name = `${city.name},${country_name}`;
       acc[city.code] = {
         ...city,
         country_name,
         full_name,
       };
       return acc;
-    }, {});
+    }, {});   
   }
 
   serializAirlines (airlines) {
@@ -88,9 +88,9 @@ class Location {
   }  
 
   async fetchTickets(params) {
-    const response = await this.api.prices(params);
-    this.lastSearch = this.serializeTickets(response.data); 
-    // console.log(this.lastSearch);      
+    const response = await this.api.prices(params);    
+    this.lastSearch = this.serializeTickets(response.data);
+    console.log(this.lastSearch);
   }
 
   serializeTickets (tickets) {
@@ -103,11 +103,10 @@ class Location {
         airline_name: this.getAirlineNameByCode(ticket.airline),
         departure_at: this.formatDate(ticket.departure_at, 'dd MMM yyyy hh:mm'),
         return_at: this.formatDate(ticket.return_at, 'dd MMM yyyy hh:mm'),
-        id: i,
+        id: `${ticket.origin}${ticket.destination}${i}`,
       }
     });
   }
 }
-
 const location = new Location(api, { formatDate });
 export default location;

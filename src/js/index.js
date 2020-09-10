@@ -5,7 +5,7 @@ import formUI from './views/form';
 import currencyUI from './views/currensy';
 import ticketsUI from './views/tickets';
 import { favorite } from './store/favorite';
-import { favoritesUI } from './views/favorites';
+import { favoriteUI } from './views/favorites';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const form = formUI.form;
   const ticketsContainer = ticketsUI.container;
+  const favoriteContainer = favoriteUI.container;
 
   // События
   form.addEventListener('submit', evt => {
@@ -20,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     onSubmitForm();
   });
 
-  ticketsContainer.addEventListener('click', onFavoriteTicket);
+  ticketsContainer.addEventListener('click', onAddFavoriteTicket);
+  favoriteContainer.addEventListener('click', onDeleteFavoriteTicket);
 
   // стартовые функции
   async function initApp() {
@@ -44,13 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
     ticketsUI.renderTickets(location.lastSearch);           
   }
 
-  function onFavoriteTicket (evt) {
+  function onAddFavoriteTicket (evt) {
     if(!evt.target.classList.contains('add-favorite')) return;
-
     const dataTicketId = evt.target.closest("[data-ticket-id]");
-    const ticketId = Number(dataTicketId.dataset.ticketId);
+    const ticketId = dataTicketId.dataset.ticketId;
     const ticket = location.getTicketById(ticketId);
     favorite.addFavorite(ticket);
-    favoritesUI.renderFavorites(favorite.arrFavorite);    
+    favoriteUI.renderFavorites(favorite.arrFavorite);    
+  }
+
+  function onDeleteFavoriteTicket (evt) {
+    if(!evt.target.classList.contains('delete-favorite')) return;
+    const dataTicketId = evt.target.closest("[data-ticket-id]");
+    const ticketId = dataTicketId.dataset.ticketId;
+    favorite.deleteFavorite(ticketId);
+    favoriteUI.renderFavorites(favorite.arrFavorite);
   }
 });

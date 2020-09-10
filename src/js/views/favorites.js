@@ -1,6 +1,6 @@
 import currencyUI from './currensy';
 
-class FavoritesUI {
+class FavoriteUI {
   constructor(currency) {
     this.container = document.querySelector('#dropdown1');
     this.getCurrencySymbol = currency.getCurrencySymbol.bind(currency);
@@ -12,7 +12,7 @@ class FavoritesUI {
     const currency = this.getCurrencySymbol();
     document.querySelector('.dropdown-trigger[data-target]').textContent = `Избранное ${favoritTickets.length}`;    
     favoritTickets.forEach(ticket => {     
-      fragment += FavoritesUI.favoriteTicketTemp(ticket, currency);          
+      fragment += FavoriteUI.favoriteTicketTemp(ticket, currency);          
     });
     this.container.insertAdjacentHTML('afterBegin', fragment);
   }
@@ -50,4 +50,4 @@ class FavoritesUI {
   }
 }
 
-export const favoritesUI = new FavoritesUI(currencyUI);
+export const favoriteUI = new FavoriteUI(currencyUI);
